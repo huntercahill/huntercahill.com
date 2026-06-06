@@ -1,0 +1,5 @@
+# Audio files — hosted separately
+assets/audio/
+
+# Claude Code local settings
+.claude/

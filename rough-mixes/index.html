@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Rough Mixes — Hunter Cahill</title>
+
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .listen {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: clamp(5rem, 12vh, 9rem) var(--pad);
+    }
+
+    .listen__eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      color: var(--ember-soft);
+      margin-bottom: 1rem;
+    }
+
+    .listen__title {
+      font-family: var(--font-display);
+      font-weight: 340;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .listen__sub {
+      font-style: italic;
+      color: var(--bone-dim);
+      margin-bottom: 3.5rem;
+    }
+
+    .tracks { list-style: none; }
+
+    .track {
+      border-bottom: 1px solid rgba(111,100,87,0.22);
+      padding: 1.6rem 0;
+    }
+
+    .track:first-child { border-top: 1px solid rgba(111,100,87,0.22); }
+
+    .track__header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .track__num {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--ember);
+      min-width: 1.8rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .track__name {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 350;
+    }
+
+    /* Custom audio player */
+    .player-wrap {
+      padding-left: calc(1.8rem + 1.3rem);
+    }
+
+    .player-wrap audio {
+      width: 100%;
+      height: 40px;
+      color-scheme: dark;
+      background: var(--ink);
+      border-radius: 999px;
+      border: 1px solid var(--bone-faint);
+      accent-color: var(--ember);
+    }
+
+    .listen__note {
+      margin-top: 3.5rem;
+      font-size: 0.88rem;
+      color: var(--bone-dim);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="nav__brand" href="/">Hunter Cahill</a>
+    <span style="font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--bone-dim);">Rough Mixes</span>
+  </header>
+
+  <main class="listen">
+    <p class="listen__eyebrow">For your ears only</p>
+    <h1 class="listen__title">Rough Mixes</h1>
+    <p class="listen__sub">Hunter Cahill &mdash; new material, 2026</p>
+
+    <ol class="tracks">
+      <li class="track">
+        <div class="track__header">
+          <span class="track__num">01</span>
+          <span class="track__name">Getting By</span>
+        </div>
+        <div class="player-wrap">
+          <audio controls preload="auto" src="/assets/audio/getting-by.mp3"></audio>
+        </div>
+      </li>
+      <li class="track">
+        <div class="track__header">
+          <span class="track__num">02</span>
+          <span class="track__name">Don&rsquo;t Take Your Light</span>
+        </div>
+        <div class="player-wrap">
+          <audio controls preload="auto" src="/assets/audio/dont-take-your-light.mp3"></audio>
+        </div>
+      </li>
+      <li class="track">
+        <div class="track__header">
+          <span class="track__num">03</span>
+          <span class="track__name">When I Fell Asleep</span>
+        </div>
+        <div class="player-wrap">
+          <audio controls preload="auto" src="/assets/audio/when-i-fell-asleep.mp3"></audio>
+        </div>
+      </li>
+    </ol>
+
+    <p class="listen__note">These are rough mixes. Please don&rsquo;t share.</p>
+  </main>
+</body>
+</html>

@@ -218,6 +218,15 @@ img, iframe { display: block; max-width: 100%; }
 }
 
 /* ---- About ------------------------------------------------- */
+.about__photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  margin-bottom: 2rem;
+  filter: sepia(0.18) contrast(1.06);
+}
+
 .about__grid {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
