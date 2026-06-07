@@ -241,8 +241,26 @@ img, iframe { display: block; max-width: 100%; }
   color: var(--bone);
 }
 .about__body p { margin-bottom: 1.4rem; color: var(--bone-dim); }
-.about__body p:last-child { color: var(--bone); }
 .about__body em { color: var(--bone); font-style: italic; }
+.about__body blockquote {
+  margin: 2rem 0 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--ember);
+}
+.about__body blockquote p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: var(--bone);
+  margin-bottom: 0.5rem;
+}
+.about__body blockquote cite {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  font-style: normal;
+}
 .dropcap {
   float: left;
   font-family: var(--font-display);
