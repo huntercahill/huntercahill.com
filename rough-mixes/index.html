@@ -114,28 +114,31 @@
     <p class="listen__sub">Hunter Cahill &mdash; new material, 2026</p>
 
     <ol class="tracks">
-      <li class="track">
+      <li class="track" data-track-index="0">
         <div class="track__header">
           <span class="track__num">01</span>
           <span class="track__name">Getting By</span>
+          <button class="track__lyrics-btn" aria-label="Lyrics for Getting By">Lyrics</button>
         </div>
         <div class="player-wrap">
           <audio controls preload="auto" src="/assets/audio/getting-by.mp3"></audio>
         </div>
       </li>
-      <li class="track">
+      <li class="track" data-track-index="1">
         <div class="track__header">
           <span class="track__num">02</span>
           <span class="track__name">Don&rsquo;t Take Your Light</span>
+          <button class="track__lyrics-btn" aria-label="Lyrics for Don't Take Your Light">Lyrics</button>
         </div>
         <div class="player-wrap">
           <audio controls preload="auto" src="/assets/audio/dont-take-your-light.mp3"></audio>
         </div>
       </li>
-      <li class="track">
+      <li class="track" data-track-index="2">
         <div class="track__header">
           <span class="track__num">03</span>
           <span class="track__name">When I Fell Asleep</span>
+          <button class="track__lyrics-btn" aria-label="Lyrics for When I Fell Asleep">Lyrics</button>
         </div>
         <div class="player-wrap">
           <audio controls preload="auto" src="/assets/audio/when-i-fell-asleep.mp3"></audio>
@@ -145,5 +148,79 @@
 
     <p class="listen__note">These are rough mixes. Please don&rsquo;t share.</p>
   </main>
+
+  <!-- Lyrics modal -->
+  <div class="lyrics-modal" id="lyrics-modal" role="dialog" aria-modal="true" aria-labelledby="lyrics-modal-title">
+    <div class="lyrics-modal__backdrop"></div>
+    <div class="lyrics-modal__panel">
+      <button class="lyrics-modal__close" aria-label="Close lyrics">&times;</button>
+      <span class="lyrics-modal__num" id="lyrics-modal-num"></span>
+      <h2 class="lyrics-modal__title" id="lyrics-modal-title"></h2>
+      <div class="lyrics-modal__body" id="lyrics-modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var lyricsData = [
+        {
+          num: "01",
+          title: "Getting By",
+          lyrics: "Coffee in the morning\nGet right before I drive\nSome call it medicating\nI call it getting by\n\nHold it all together\nTill there's no one in sight\nSome call it keeping busy\nI call it getting by\n\nThere's a mirror in the hallway\nI don't look at anymore\n\nSomebody else living\nA life I can't afford\nSomebody else living\nA life I can't afford\n\nAsk you how you're doing\nDon't hear your reply\nSome call it being friendly\nI call it getting by\n\nI can't keep from drinking\nNo matter what I try\nSome call it a problem\nI call it getting by"
+        },
+        {
+          num: "02",
+          title: "Don’t Take Your Light",
+          lyrics: "Try not to wish\nTake what I get\n\nTry not to want\nWant it, it’s gone\n\nThere are your things\nAll over the bed\n\nThere are the things\nCan’t be unsaid\n\nNo birds sing in the trees\nNo flowers bloom for the bees\n\nGround has forgotten its seed\nWell has run dry underneath\n\nDon’t take your light\nOut of my life, babe\n\nHairs in the sink\nLeave them for weeks\n\nScent in the sheets\nLeave them for weeks\n\nTry not to drink\nQuiet alone\n\nTry not to think\nYou’re coming home\n\nNo birds sing in the trees\nNo flowers bloom for the bees\n\nGround has forgotten its seed\nWell has run dry underneath\n\nDon’t take your light\nOut of my life, babe"
+        },
+        {
+          num: "03",
+          title: "When I Fell Asleep",
+          lyrics: "Awake, in bed, four years old\nBegging for my soul\nDaddy said I’d burn in hell\nI don’t do what I’m told\n\nJesus won’t you save me\nI don’t know what I did\nMama said they’re killing babies\nAre they killing little kids?\n\nDon’t spare the rod\nYou’ll spoil me\nThis kind of love\nSmells like gasoline\nYour face turns to flames\nWhen you’re loving me\nYou love me so much\nThat I can’t breathe\n\nIn the car, no conversation\nOnly voices, on the station\n\nMock execution\nSunday school\nStart to cry\nPracticing the ending\nWhen we all might die\nIf god is love\nWhy am I afraid?\nIf god is with us\nWhy don’t I feel safe?\n\nDon’t spare the rod\nYou’ll spoil me\nThis kind of love\nSmells like gasoline\nYour face turns to flames\nWhen you’re loving me\nYou love me so much\nThat I can’t breathe\n\nStill a memory I keep\nYou carried me\nWhen I fell asleep"
+        }
+      ];
+
+      var lyricsModal   = document.getElementById("lyrics-modal");
+      var lyricsNum     = document.getElementById("lyrics-modal-num");
+      var lyricsTitle   = document.getElementById("lyrics-modal-title");
+      var lyricsBody    = document.getElementById("lyrics-modal-body");
+      var lyricsClose   = lyricsModal.querySelector(".lyrics-modal__close");
+      var lyricsBackdrop = lyricsModal.querySelector(".lyrics-modal__backdrop");
+      var lastFocused   = null;
+
+      function openLyrics(index) {
+        var d = lyricsData[index];
+        if (!d) return;
+        lyricsNum.textContent = d.num;
+        lyricsTitle.textContent = d.title;
+        lyricsBody.innerHTML = d.lyrics.split("\n\n").map(function (s) {
+          return "<p>" + s.replace(/\n/g, "<br>") + "</p>";
+        }).join("");
+        lyricsModal.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        lyricsClose.focus();
+      }
+
+      function closeLyrics() {
+        lyricsModal.classList.remove("is-open");
+        document.body.style.overflow = "";
+        if (lastFocused) lastFocused.focus();
+      }
+
+      document.querySelectorAll(".track__lyrics-btn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          lastFocused = btn;
+          openLyrics(parseInt(btn.closest("[data-track-index]").dataset.trackIndex, 10));
+        });
+      });
+
+      lyricsClose.addEventListener("click", closeLyrics);
+      lyricsBackdrop.addEventListener("click", closeLyrics);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && lyricsModal.classList.contains("is-open")) closeLyrics();
+      });
+    }());
+  </script>
 </body>
 </html>

@@ -94,12 +94,12 @@
       <div class="music__grid">
         <!-- Tracklist — edit this list to update the record -->
         <ol class="tracklist" id="tracklist">
-          <li><span class="track__num">01</span><span class="track__name">Goddamn</span></li>
-          <li><span class="track__num">02</span><span class="track__name">Never Again</span></li>
-          <li><span class="track__num">03</span><span class="track__name">Some Things You Don&rsquo;t Know About Me</span></li>
-          <li><span class="track__num">04</span><span class="track__name">Laughable</span></li>
-          <li><span class="track__num">05</span><span class="track__name">Trapped In The Walls</span></li>
-          <li><span class="track__num">06</span><span class="track__name">Falling Down</span></li>
+          <li data-track-index="0"><span class="track__num">01</span><span class="track__name">Goddamn</span><button class="track__lyrics-btn" aria-label="Lyrics for Goddamn">Lyrics</button></li>
+          <li data-track-index="1"><span class="track__num">02</span><span class="track__name">Never Again</span><button class="track__lyrics-btn" aria-label="Lyrics for Never Again">Lyrics</button></li>
+          <li data-track-index="2"><span class="track__num">03</span><span class="track__name">Some Things You Don&rsquo;t Know About Me</span><button class="track__lyrics-btn" aria-label="Lyrics for Some Things You Don't Know About Me">Lyrics</button></li>
+          <li data-track-index="3"><span class="track__num">04</span><span class="track__name">Laughable</span><button class="track__lyrics-btn" aria-label="Lyrics for Laughable">Lyrics</button></li>
+          <li data-track-index="4"><span class="track__num">05</span><span class="track__name">Trapped In The Walls</span><button class="track__lyrics-btn" aria-label="Lyrics for Trapped In The Walls">Lyrics</button></li>
+          <li data-track-index="5"><span class="track__num">06</span><span class="track__name">Falling Down</span><button class="track__lyrics-btn" aria-label="Lyrics for Falling Down">Lyrics</button></li>
         </ol>
 
         <!-- Player -->
@@ -204,6 +204,17 @@
     </nav>
     <p class="footer__legal">&copy; <span id="year"></span> Hunter Cahill. All rights reserved.</p>
   </footer>
+
+  <!-- Lyrics modal -->
+  <div class="lyrics-modal" id="lyrics-modal" role="dialog" aria-modal="true" aria-labelledby="lyrics-modal-title">
+    <div class="lyrics-modal__backdrop"></div>
+    <div class="lyrics-modal__panel">
+      <button class="lyrics-modal__close" aria-label="Close lyrics">&times;</button>
+      <span class="lyrics-modal__num" id="lyrics-modal-num"></span>
+      <h2 class="lyrics-modal__title" id="lyrics-modal-title"></h2>
+      <div class="lyrics-modal__body" id="lyrics-modal-body"></div>
+    </div>
+  </div>
 
   <script src="https://w.soundcloud.com/player/api.js"></script>
   <script src="/js/main.js" defer></script>

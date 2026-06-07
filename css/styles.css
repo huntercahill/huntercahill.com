@@ -515,6 +515,113 @@ img, iframe { display: block; max-width: 100%; }
   .press__date { order: -1; }
 }
 
+/* ---- Tracklist lyrics button -------------------------------- */
+.track__lyrics-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ember-soft);
+  padding: 0.15rem 0;
+  opacity: 0;
+  pointer-events: none;
+  position: relative;
+  transition: opacity 0.25s var(--ease), color 0.25s var(--ease);
+}
+.track__lyrics-btn::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 1px; background: var(--ember);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.tracklist li:hover .track__lyrics-btn,
+.track:hover .track__lyrics-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+.track__lyrics-btn:hover { color: var(--bone); }
+.track__lyrics-btn:hover::after { transform: scaleX(1); }
+
+/* ---- Lyrics modal ------------------------------------------ */
+.lyrics-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pad);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+}
+.lyrics-modal.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+.lyrics-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(21,17,14,0.86);
+  backdrop-filter: blur(8px);
+}
+.lyrics-modal__panel {
+  position: relative;
+  z-index: 1;
+  background: var(--ink-2);
+  border: 1px solid rgba(111,100,87,0.35);
+  border-radius: 2px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 2.8rem 3rem 3.2rem;
+  transform: translateY(14px);
+  transition: transform 0.38s var(--ease);
+}
+.lyrics-modal.is-open .lyrics-modal__panel { transform: translateY(0); }
+.lyrics-modal__close {
+  position: absolute;
+  top: 1.1rem; right: 1.3rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--bone-dim);
+  transition: color 0.25s var(--ease);
+}
+.lyrics-modal__close:hover { color: var(--bone); }
+.lyrics-modal__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--ember);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+.lyrics-modal__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(111,100,87,0.22);
+}
+.lyrics-modal__body {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--bone-dim);
+}
+.lyrics-modal__body p { margin-bottom: 1.4rem; }
+.lyrics-modal__body p:last-child { margin-bottom: 0; }
+
 /* ---- Reduced motion ---------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
