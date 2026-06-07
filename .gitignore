@@ -3,3 +3,6 @@ assets/audio/
 
 # Claude Code local settings
 .claude/
+
+# Superpowers brainstorm sessions
+.superpowers/
