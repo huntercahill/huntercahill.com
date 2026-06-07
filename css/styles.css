@@ -138,24 +138,24 @@ img, iframe { display: block; max-width: 100%; }
   text-transform: uppercase;
   letter-spacing: 0.34em;
   color: var(--ember-soft);
-  margin-bottom: 1.4rem;
+  margin-bottom: 2.4rem;
 }
 .hero__title {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 300;
-  font-size: clamp(4rem, 17vw, 13rem);
-  line-height: 0.86;
+  font-size: clamp(3rem, 12vw, 9rem);
+  line-height: 0.9;
   letter-spacing: -0.02em;
   font-variation-settings: "opsz" 144;
 }
 .hero__tagline {
-  margin-top: 1.8rem;
+  margin-top: 2.8rem;
   font-size: clamp(1.2rem, 2.6vw, 1.9rem);
   color: var(--bone-dim);
   font-weight: 300;
 }
 .hero__tagline em { font-style: italic; color: var(--bone); }
-.hero__actions { margin-top: 2.6rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero__actions { margin-top: 3.4rem; display: flex; gap: 1rem; flex-wrap: wrap; }
 
 .hero__scroll {
   position: absolute;
