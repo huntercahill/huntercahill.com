@@ -1,0 +1,1021 @@
+# EPK Song Pages Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Create three standalone press kit / song pages for the Estuary Sessions singles at `/music/getting-by/`, `/music/dont-take-your-light/`, and `/music/when-i-fell-asleep/`.
+
+**Architecture:** Three self-contained HTML files, no build step. Each file has an inline `<style>` block reusing CSS custom properties from the shared `styles.css`. Press-forward layout: pitch text → photo placeholder → HTML5 audio player → press quotes → lyrics → bio → Formspree contact form → footer. Pages are `noindex` until their release date.
+
+**Tech Stack:** Static HTML, CSS custom properties, HTML5 `<audio>`, Formspree (existing endpoint)
+
+---
+
+## Files
+
+| Action | Path |
+|--------|------|
+| Create | `music/getting-by/index.html` |
+| Create | `music/dont-take-your-light/index.html` |
+| Create | `music/when-i-fell-asleep/index.html` |
+
+All paths relative to repo root (`huntercahill.com/`).
+
+---
+
+### Task 1: Getting By page
+
+**Files:**
+- Create: `music/getting-by/index.html`
+
+- [ ] **Step 1: Create the directory and file**
+
+```bash
+mkdir -p music/getting-by
+```
+
+Then create `music/getting-by/index.html` with this exact content:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Getting By &middot; Hunter Cahill</title>
+  <meta name="description" content="Getting By by Hunter Cahill &mdash; lead single from the Estuary Sessions. Releases July 3, 2026." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="music.song" />
+  <meta property="og:site_name" content="Hunter Cahill" />
+  <meta property="og:title" content="Getting By &mdash; Hunter Cahill" />
+  <meta property="og:description" content="A two-minute song about the gap between presenting fine and not being fine. Releases July 3, 2026." />
+  <meta property="og:url" content="https://www.huntercahill.com/music/getting-by/" />
+  <meta property="og:image" content="https://www.huntercahill.com/assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="canonical" href="https://www.huntercahill.com/music/getting-by/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .epk {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vh, 5rem) var(--pad) clamp(4rem, 10vh, 7rem);
+    }
+    .epk__eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.34em;
+      color: var(--ember-soft);
+      margin-bottom: 1rem;
+    }
+    .epk__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .epk__by {
+      font-style: italic;
+      color: var(--bone-dim);
+      font-size: 1.1rem;
+      margin-bottom: 2.4rem;
+    }
+    .epk__pitch {
+      color: var(--bone-dim);
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      padding-bottom: 2.8rem;
+      border-bottom: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__pitch em { color: var(--bone); font-style: italic; }
+    .epk__pitch strong { color: var(--bone); font-weight: 400; }
+    .epk__photo {
+      width: 100%;
+      aspect-ratio: 3/2;
+      background: linear-gradient(135deg, #2a1f18 0%, #1d1813 100%);
+      border: 1px dashed rgba(111,100,87,0.35);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .epk__photo span {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+    }
+    .epk__photo small {
+      font-size: 0.65rem;
+      color: var(--bone-faint);
+      opacity: 0.55;
+      font-style: italic;
+    }
+    .epk__player-wrap { margin-bottom: 3rem; }
+    .epk__player-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+      margin-bottom: 0.6rem;
+    }
+    .epk__player-wrap audio {
+      width: 100%;
+      height: 40px;
+      color-scheme: dark;
+      background: var(--ink);
+      border-radius: 999px;
+      border: 1px solid var(--bone-faint);
+      accent-color: var(--ember);
+    }
+    .epk-section-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--ember-soft);
+      margin-bottom: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .epk-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      max-width: 80px;
+      background: var(--bone-faint);
+    }
+    .epk__press { margin-bottom: 3rem; }
+    .press-quote {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(111,100,87,0.18);
+    }
+    .press-quote:first-child { border-top: 1px solid rgba(111,100,87,0.18); }
+    .press-quote__text {
+      font-style: italic;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: var(--bone);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .press-quote__text::before { content: "\201C"; color: var(--ember); margin-right: 0.05em; }
+    .press-quote__text::after  { content: "\201D"; color: var(--ember); margin-left: 0.05em; }
+    .press-quote__source {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--bone-faint);
+    }
+    .press-quote__source a { color: var(--ember-soft); text-decoration: underline; text-underline-offset: 3px; }
+    .epk__lyrics { margin-bottom: 3rem; }
+    .lyrics-body {
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--bone-dim);
+    }
+    .lyrics-body p { margin-bottom: 1.4rem; }
+    .lyrics-body p:last-child { margin-bottom: 0; }
+    .epk__bio {
+      margin-bottom: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__bio p { color: var(--bone-dim); margin-bottom: 1.2rem; }
+    .epk__bio p:last-child { margin-bottom: 0; }
+    .epk__bio em { color: var(--bone); }
+    .epk__contact {
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="top">
+    <a class="nav__brand" href="/">Hunter Cahill</a>
+    <a href="/" style="font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--bone-faint);">&larr; huntercahill.com</a>
+  </header>
+
+  <main class="epk">
+
+    <p class="epk__eyebrow">Press Kit &middot; Estuary Sessions &middot; 2026</p>
+    <h1 class="epk__title">Getting By</h1>
+    <p class="epk__by">Hunter Cahill</p>
+
+    <p class="epk__pitch">
+      <em>Getting By</em> is a two-minute song about the gap between presenting fine and not being fine &mdash; the morning routine, the mirror you stop looking at, the small acts of management that hold a life together. Hunter Cahill wrote it from the inside. <strong>&ldquo;Some call it a problem. I call it getting by.&rdquo;</strong> Lead single from the Estuary Sessions, recorded with engineer Matt Gerhard at Estuary Recording, Austin. Releases July 3, 2026.
+    </p>
+
+    <div class="epk__photo">
+      <span>Photo Placeholder</span>
+      <small>June 9, 2026 session &middot; Rembrandt lighting</small>
+    </div>
+
+    <div class="epk__player-wrap">
+      <p class="epk__player-label">Listen</p>
+      <audio controls preload="auto" src="/assets/audio/getting-by.mp3"></audio>
+    </div>
+
+    <div class="epk__press">
+      <p class="epk-section-label">Press</p>
+      <div class="press-quote">
+        <p class="press-quote__text">Sometimes overwhelming, often heartbreaking, always compelling.</p>
+        <p class="press-quote__source"><a href="/press/indie-obsessive-laughable-by-hunter-cahill-a-song-feature/">Indie Obsessive</a> &middot; Feb 2022</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Fans of Manchester Orchestra and REM, rejoice. This is stunning stuff.</p>
+        <p class="press-quote__source"><a href="/press/soundsphere-magazine-listen-hunter-cahill-never-again/">Soundsphere Magazine</a> &middot; Aug 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Everyone will find themselves in the song.</p>
+        <p class="press-quote__source"><a href="/press/we-love-that-sound-hunter-cahill-falling-down/">We Love That Sound</a> &middot; Oct 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Off-the-cuff, heart-on-your-sleeve.</p>
+        <p class="press-quote__source">Unxigned &middot; 2021</p>
+      </div>
+    </div>
+
+    <div class="epk__lyrics">
+      <p class="epk-section-label">Lyrics</p>
+      <div class="lyrics-body">
+        <p>Coffee in the morning<br>Get right before I drive<br>Some call it medicating<br>I call it getting by</p>
+        <p>Hold it all together<br>Till there&rsquo;s no one in sight<br>Some call it keeping busy<br>I call it getting by</p>
+        <p>There&rsquo;s a mirror in the hallway<br>I don&rsquo;t look at anymore</p>
+        <p>Somebody else living<br>A life I can&rsquo;t afford<br>Somebody else living<br>A life I can&rsquo;t afford</p>
+        <p>Ask you how you&rsquo;re doing<br>Don&rsquo;t hear your reply<br>Some call it being friendly<br>I call it getting by</p>
+        <p>I can&rsquo;t keep from drinking<br>No matter what I try<br>Some call it a problem<br>I call it getting by</p>
+      </div>
+    </div>
+
+    <div class="epk__bio">
+      <p class="epk-section-label">About</p>
+      <p>Hunter Cahill is an Austin, Texas singer-songwriter. His debut collection <em>Some Things You Don&rsquo;t Know About Me</em> arrived between 2021 and 2022 &mdash; six self-recorded singles, confessional music that kept its distance. The press noticed. Austin Town Hall drew comparisons to David Bazan; Soundsphere called it &ldquo;stunning.&rdquo; He released all of it wearing a wolf mask.</p>
+      <p>The Estuary Sessions, recorded with engineer Matt Gerhard, go further back than the coping does &mdash; to a religious upbringing where love and fear were the same thing, and the questions it left him asking. Three singles, 2026.</p>
+    </div>
+
+    <div class="epk__contact">
+      <p class="epk-section-label">Contact</p>
+      <form class="contact__form" action="https://formspree.io/f/mpqepdoa" method="POST">
+        <div class="contact__field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="contact__field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="contact__field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__name">Hunter Cahill</p>
+    <nav class="footer__social" aria-label="Social">
+      <a href="https://www.instagram.com/huntercahillmusic/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/channel/UCiPcSfXeqOwow5mSQeaxGfQ" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://soundcloud.com/huntercahill" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="https://open.spotify.com/artist/3ZRRh8ZLGeVQCQBd1S9OuK" target="_blank" rel="noopener">Spotify</a>
+    </nav>
+    <p class="footer__legal">&copy; <span id="year"></span> Hunter Cahill. All rights reserved.</p>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
+```
+
+- [ ] **Step 2: Verify the page renders correctly**
+
+Start a local server from the repo root:
+```bash
+python3 -m http.server 8081
+```
+
+Open `http://localhost:8081/music/getting-by/` in a browser. Confirm:
+- Page title is "Getting By · Hunter Cahill"
+- Audio player appears and loads `/assets/audio/getting-by.mp3`
+- All four press quotes are visible
+- Full lyrics are displayed
+- Contact form has Name, Email, Message fields and a Send button
+- Footer social links are present
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add music/getting-by/index.html
+git commit -m "feat: add EPK page for Getting By"
+```
+
+---
+
+### Task 2: Don't Take Your Light page
+
+**Files:**
+- Create: `music/dont-take-your-light/index.html`
+
+- [ ] **Step 1: Create the directory and file**
+
+```bash
+mkdir -p music/dont-take-your-light
+```
+
+Then create `music/dont-take-your-light/index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Don&rsquo;t Take Your Light &middot; Hunter Cahill</title>
+  <meta name="description" content="Don't Take Your Light by Hunter Cahill &mdash; second single from the Estuary Sessions. Releases August 8, 2026." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="music.song" />
+  <meta property="og:site_name" content="Hunter Cahill" />
+  <meta property="og:title" content="Don&rsquo;t Take Your Light &mdash; Hunter Cahill" />
+  <meta property="og:description" content="A grief song that earns its weight in specifics. Releases August 8, 2026." />
+  <meta property="og:url" content="https://www.huntercahill.com/music/dont-take-your-light/" />
+  <meta property="og:image" content="https://www.huntercahill.com/assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="canonical" href="https://www.huntercahill.com/music/dont-take-your-light/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .epk {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vh, 5rem) var(--pad) clamp(4rem, 10vh, 7rem);
+    }
+    .epk__eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.34em;
+      color: var(--ember-soft);
+      margin-bottom: 1rem;
+    }
+    .epk__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .epk__by {
+      font-style: italic;
+      color: var(--bone-dim);
+      font-size: 1.1rem;
+      margin-bottom: 2.4rem;
+    }
+    .epk__pitch {
+      color: var(--bone-dim);
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      padding-bottom: 2.8rem;
+      border-bottom: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__pitch em { color: var(--bone); font-style: italic; }
+    .epk__pitch strong { color: var(--bone); font-weight: 400; }
+    .epk__photo {
+      width: 100%;
+      aspect-ratio: 3/2;
+      background: linear-gradient(135deg, #2a1f18 0%, #1d1813 100%);
+      border: 1px dashed rgba(111,100,87,0.35);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .epk__photo span {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+    }
+    .epk__photo small {
+      font-size: 0.65rem;
+      color: var(--bone-faint);
+      opacity: 0.55;
+      font-style: italic;
+    }
+    .epk__player-wrap { margin-bottom: 3rem; }
+    .epk__player-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+      margin-bottom: 0.6rem;
+    }
+    .epk__player-wrap audio {
+      width: 100%;
+      height: 40px;
+      color-scheme: dark;
+      background: var(--ink);
+      border-radius: 999px;
+      border: 1px solid var(--bone-faint);
+      accent-color: var(--ember);
+    }
+    .epk-section-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--ember-soft);
+      margin-bottom: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .epk-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      max-width: 80px;
+      background: var(--bone-faint);
+    }
+    .epk__press { margin-bottom: 3rem; }
+    .press-quote {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(111,100,87,0.18);
+    }
+    .press-quote:first-child { border-top: 1px solid rgba(111,100,87,0.18); }
+    .press-quote__text {
+      font-style: italic;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: var(--bone);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .press-quote__text::before { content: "\201C"; color: var(--ember); margin-right: 0.05em; }
+    .press-quote__text::after  { content: "\201D"; color: var(--ember); margin-left: 0.05em; }
+    .press-quote__source {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--bone-faint);
+    }
+    .press-quote__source a { color: var(--ember-soft); text-decoration: underline; text-underline-offset: 3px; }
+    .epk__lyrics { margin-bottom: 3rem; }
+    .lyrics-body {
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--bone-dim);
+    }
+    .lyrics-body p { margin-bottom: 1.4rem; }
+    .lyrics-body p:last-child { margin-bottom: 0; }
+    .epk__bio {
+      margin-bottom: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__bio p { color: var(--bone-dim); margin-bottom: 1.2rem; }
+    .epk__bio p:last-child { margin-bottom: 0; }
+    .epk__bio em { color: var(--bone); }
+    .epk__contact {
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="top">
+    <a class="nav__brand" href="/">Hunter Cahill</a>
+    <a href="/" style="font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--bone-faint);">&larr; huntercahill.com</a>
+  </header>
+
+  <main class="epk">
+
+    <p class="epk__eyebrow">Press Kit &middot; Estuary Sessions &middot; 2026</p>
+    <h1 class="epk__title">Don&rsquo;t Take Your Light</h1>
+    <p class="epk__by">Hunter Cahill</p>
+
+    <p class="epk__pitch">
+      <em>Don&rsquo;t Take Your Light</em> is a grief song that earns its weight in specifics &mdash; hairs in the sink left for weeks, a scent in the sheets, the discipline of not letting yourself think they&rsquo;re coming home. Spare and devastating. <strong>&ldquo;Don&rsquo;t take your light out of my life, babe.&rdquo;</strong> Second single from the Estuary Sessions, recorded with engineer Matt Gerhard at Estuary Recording, Austin. Releases August 8, 2026.
+    </p>
+
+    <div class="epk__photo">
+      <span>Photo Placeholder</span>
+      <small>June 9, 2026 session &middot; Rembrandt lighting</small>
+    </div>
+
+    <div class="epk__player-wrap">
+      <p class="epk__player-label">Listen</p>
+      <audio controls preload="auto" src="/assets/audio/dont-take-your-light.mp3"></audio>
+    </div>
+
+    <div class="epk__press">
+      <p class="epk-section-label">Press</p>
+      <div class="press-quote">
+        <p class="press-quote__text">Sometimes overwhelming, often heartbreaking, always compelling.</p>
+        <p class="press-quote__source"><a href="/press/indie-obsessive-laughable-by-hunter-cahill-a-song-feature/">Indie Obsessive</a> &middot; Feb 2022</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Fans of Manchester Orchestra and REM, rejoice. This is stunning stuff.</p>
+        <p class="press-quote__source"><a href="/press/soundsphere-magazine-listen-hunter-cahill-never-again/">Soundsphere Magazine</a> &middot; Aug 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Everyone will find themselves in the song.</p>
+        <p class="press-quote__source"><a href="/press/we-love-that-sound-hunter-cahill-falling-down/">We Love That Sound</a> &middot; Oct 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Off-the-cuff, heart-on-your-sleeve.</p>
+        <p class="press-quote__source">Unxigned &middot; 2021</p>
+      </div>
+    </div>
+
+    <div class="epk__lyrics">
+      <p class="epk-section-label">Lyrics</p>
+      <div class="lyrics-body">
+        <p>Try not to wish<br>Take what I get</p>
+        <p>Try not to want<br>Want it, it&rsquo;s gone</p>
+        <p>There are your things<br>All over the bed</p>
+        <p>There are the things<br>Can&rsquo;t be unsaid</p>
+        <p>No birds sing in the trees<br>No flowers bloom for the bees</p>
+        <p>Ground has forgotten its seed<br>Well has run dry underneath</p>
+        <p>Don&rsquo;t take your light<br>Out of my life, babe</p>
+        <p>Hairs in the sink<br>Leave them for weeks</p>
+        <p>Scent in the sheets<br>Leave them for weeks</p>
+        <p>Try not to drink<br>Quiet alone</p>
+        <p>Try not to think<br>You&rsquo;re coming home</p>
+        <p>No birds sing in the trees<br>No flowers bloom for the bees</p>
+        <p>Ground has forgotten its seed<br>Well has run dry underneath</p>
+        <p>Don&rsquo;t take your light<br>Out of my life, babe</p>
+      </div>
+    </div>
+
+    <div class="epk__bio">
+      <p class="epk-section-label">About</p>
+      <p>Hunter Cahill is an Austin, Texas singer-songwriter. His debut collection <em>Some Things You Don&rsquo;t Know About Me</em> arrived between 2021 and 2022 &mdash; six self-recorded singles, confessional music that kept its distance. The press noticed. Austin Town Hall drew comparisons to David Bazan; Soundsphere called it &ldquo;stunning.&rdquo; He released all of it wearing a wolf mask.</p>
+      <p>The Estuary Sessions, recorded with engineer Matt Gerhard, go further back than the coping does &mdash; to a religious upbringing where love and fear were the same thing, and the questions it left him asking. Three singles, 2026.</p>
+    </div>
+
+    <div class="epk__contact">
+      <p class="epk-section-label">Contact</p>
+      <form class="contact__form" action="https://formspree.io/f/mpqepdoa" method="POST">
+        <div class="contact__field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="contact__field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="contact__field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__name">Hunter Cahill</p>
+    <nav class="footer__social" aria-label="Social">
+      <a href="https://www.instagram.com/huntercahillmusic/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/channel/UCiPcSfXeqOwow5mSQeaxGfQ" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://soundcloud.com/huntercahill" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="https://open.spotify.com/artist/3ZRRh8ZLGeVQCQBd1S9OuK" target="_blank" rel="noopener">Spotify</a>
+    </nav>
+    <p class="footer__legal">&copy; <span id="year"></span> Hunter Cahill. All rights reserved.</p>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
+```
+
+- [ ] **Step 2: Verify the page renders correctly**
+
+With the server still running at port 8081, open `http://localhost:8081/music/dont-take-your-light/` and confirm:
+- Page title is "Don't Take Your Light · Hunter Cahill"
+- Audio player loads `/assets/audio/dont-take-your-light.mp3`
+- Lyrics include "Hairs in the sink / Leave them for weeks"
+- Contact form present
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add music/dont-take-your-light/index.html
+git commit -m "feat: add EPK page for Don't Take Your Light"
+```
+
+---
+
+### Task 3: When I Fell Asleep page
+
+**Files:**
+- Create: `music/when-i-fell-asleep/index.html`
+
+- [ ] **Step 1: Create the directory and file**
+
+```bash
+mkdir -p music/when-i-fell-asleep
+```
+
+Then create `music/when-i-fell-asleep/index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>When I Fell Asleep &middot; Hunter Cahill</title>
+  <meta name="description" content="When I Fell Asleep by Hunter Cahill &mdash; third single from the Estuary Sessions. Releases September 5, 2026." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="music.song" />
+  <meta property="og:site_name" content="Hunter Cahill" />
+  <meta property="og:title" content="When I Fell Asleep &mdash; Hunter Cahill" />
+  <meta property="og:description" content="&ldquo;If god is love / Why am I afraid?&rdquo; Releases September 5, 2026." />
+  <meta property="og:url" content="https://www.huntercahill.com/music/when-i-fell-asleep/" />
+  <meta property="og:image" content="https://www.huntercahill.com/assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="canonical" href="https://www.huntercahill.com/music/when-i-fell-asleep/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .epk {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vh, 5rem) var(--pad) clamp(4rem, 10vh, 7rem);
+    }
+    .epk__eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.34em;
+      color: var(--ember-soft);
+      margin-bottom: 1rem;
+    }
+    .epk__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .epk__by {
+      font-style: italic;
+      color: var(--bone-dim);
+      font-size: 1.1rem;
+      margin-bottom: 2.4rem;
+    }
+    .epk__pitch {
+      color: var(--bone-dim);
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      padding-bottom: 2.8rem;
+      border-bottom: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__pitch em { color: var(--bone); font-style: italic; }
+    .epk__pitch strong { color: var(--bone); font-weight: 400; }
+    .epk__photo {
+      width: 100%;
+      aspect-ratio: 3/2;
+      background: linear-gradient(135deg, #2a1f18 0%, #1d1813 100%);
+      border: 1px dashed rgba(111,100,87,0.35);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .epk__photo span {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+    }
+    .epk__photo small {
+      font-size: 0.65rem;
+      color: var(--bone-faint);
+      opacity: 0.55;
+      font-style: italic;
+    }
+    .epk__player-wrap { margin-bottom: 3rem; }
+    .epk__player-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--bone-faint);
+      margin-bottom: 0.6rem;
+    }
+    .epk__player-wrap audio {
+      width: 100%;
+      height: 40px;
+      color-scheme: dark;
+      background: var(--ink);
+      border-radius: 999px;
+      border: 1px solid var(--bone-faint);
+      accent-color: var(--ember);
+    }
+    .epk-section-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--ember-soft);
+      margin-bottom: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .epk-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      max-width: 80px;
+      background: var(--bone-faint);
+    }
+    .epk__press { margin-bottom: 3rem; }
+    .press-quote {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(111,100,87,0.18);
+    }
+    .press-quote:first-child { border-top: 1px solid rgba(111,100,87,0.18); }
+    .press-quote__text {
+      font-style: italic;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: var(--bone);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .press-quote__text::before { content: "\201C"; color: var(--ember); margin-right: 0.05em; }
+    .press-quote__text::after  { content: "\201D"; color: var(--ember); margin-left: 0.05em; }
+    .press-quote__source {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--bone-faint);
+    }
+    .press-quote__source a { color: var(--ember-soft); text-decoration: underline; text-underline-offset: 3px; }
+    .epk__lyrics { margin-bottom: 3rem; }
+    .lyrics-body {
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--bone-dim);
+    }
+    .lyrics-body p { margin-bottom: 1.4rem; }
+    .lyrics-body p:last-child { margin-bottom: 0; }
+    .epk__bio {
+      margin-bottom: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+    .epk__bio p { color: var(--bone-dim); margin-bottom: 1.2rem; }
+    .epk__bio p:last-child { margin-bottom: 0; }
+    .epk__bio em { color: var(--bone); }
+    .epk__contact {
+      padding-top: 3rem;
+      border-top: 1px solid rgba(111,100,87,0.22);
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="top">
+    <a class="nav__brand" href="/">Hunter Cahill</a>
+    <a href="/" style="font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--bone-faint);">&larr; huntercahill.com</a>
+  </header>
+
+  <main class="epk">
+
+    <p class="epk__eyebrow">Press Kit &middot; Estuary Sessions &middot; 2026</p>
+    <h1 class="epk__title">When I Fell Asleep</h1>
+    <p class="epk__by">Hunter Cahill</p>
+
+    <p class="epk__pitch">
+      <em>When I Fell Asleep</em> starts at four years old &mdash; awake in bed, begging for a soul, trying to understand why love and the threat of hell feel like the same thing. Cello arrangement. The question the whole record is built around: <strong>&ldquo;If god is love / Why am I afraid?&rdquo;</strong> Third single from the Estuary Sessions, recorded with engineer Matt Gerhard at Estuary Recording, Austin. Releases September 5, 2026.
+    </p>
+
+    <div class="epk__photo">
+      <span>Photo Placeholder</span>
+      <small>June 9, 2026 session &middot; Rembrandt lighting</small>
+    </div>
+
+    <div class="epk__player-wrap">
+      <p class="epk__player-label">Listen</p>
+      <audio controls preload="auto" src="/assets/audio/when-i-fell-asleep.mp3"></audio>
+    </div>
+
+    <div class="epk__press">
+      <p class="epk-section-label">Press</p>
+      <div class="press-quote">
+        <p class="press-quote__text">Sometimes overwhelming, often heartbreaking, always compelling.</p>
+        <p class="press-quote__source"><a href="/press/indie-obsessive-laughable-by-hunter-cahill-a-song-feature/">Indie Obsessive</a> &middot; Feb 2022</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Fans of Manchester Orchestra and REM, rejoice. This is stunning stuff.</p>
+        <p class="press-quote__source"><a href="/press/soundsphere-magazine-listen-hunter-cahill-never-again/">Soundsphere Magazine</a> &middot; Aug 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Everyone will find themselves in the song.</p>
+        <p class="press-quote__source"><a href="/press/we-love-that-sound-hunter-cahill-falling-down/">We Love That Sound</a> &middot; Oct 2021</p>
+      </div>
+      <div class="press-quote">
+        <p class="press-quote__text">Off-the-cuff, heart-on-your-sleeve.</p>
+        <p class="press-quote__source">Unxigned &middot; 2021</p>
+      </div>
+    </div>
+
+    <div class="epk__lyrics">
+      <p class="epk-section-label">Lyrics</p>
+      <div class="lyrics-body">
+        <p>Awake, in bed, four years old<br>Begging for my soul<br>Daddy said I&rsquo;d burn in hell<br>I don&rsquo;t do what I&rsquo;m told</p>
+        <p>Jesus won&rsquo;t you save me<br>I don&rsquo;t know what I did<br>Mama said they&rsquo;re killing babies<br>Are they killing little kids?</p>
+        <p>Don&rsquo;t spare the rod<br>You&rsquo;ll spoil me<br>This kind of love<br>Smells like gasoline<br>Your face turns to flames<br>When you&rsquo;re loving me<br>You love me so much<br>That I can&rsquo;t breathe</p>
+        <p>In the car, no conversation<br>Only voices, on the station</p>
+        <p>Mock execution<br>Sunday school<br>Start to cry<br>Practicing the ending<br>When we all might die<br>If god is love<br>Why am I afraid?<br>If god is with us<br>Why don&rsquo;t I feel safe?</p>
+        <p>Don&rsquo;t spare the rod<br>You&rsquo;ll spoil me<br>This kind of love<br>Smells like gasoline<br>Your face turns to flames<br>When you&rsquo;re loving me<br>You love me so much<br>That I can&rsquo;t breathe</p>
+        <p>Still a memory I keep<br>You carried me<br>When I fell asleep</p>
+      </div>
+    </div>
+
+    <div class="epk__bio">
+      <p class="epk-section-label">About</p>
+      <p>Hunter Cahill is an Austin, Texas singer-songwriter. His debut collection <em>Some Things You Don&rsquo;t Know About Me</em> arrived between 2021 and 2022 &mdash; six self-recorded singles, confessional music that kept its distance. The press noticed. Austin Town Hall drew comparisons to David Bazan; Soundsphere called it &ldquo;stunning.&rdquo; He released all of it wearing a wolf mask.</p>
+      <p>The Estuary Sessions, recorded with engineer Matt Gerhard, go further back than the coping does &mdash; to a religious upbringing where love and fear were the same thing, and the questions it left him asking. Three singles, 2026.</p>
+    </div>
+
+    <div class="epk__contact">
+      <p class="epk-section-label">Contact</p>
+      <form class="contact__form" action="https://formspree.io/f/mpqepdoa" method="POST">
+        <div class="contact__field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="contact__field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="contact__field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__name">Hunter Cahill</p>
+    <nav class="footer__social" aria-label="Social">
+      <a href="https://www.instagram.com/huntercahillmusic/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/channel/UCiPcSfXeqOwow5mSQeaxGfQ" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://soundcloud.com/huntercahill" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="https://open.spotify.com/artist/3ZRRh8ZLGeVQCQBd1S9OuK" target="_blank" rel="noopener">Spotify</a>
+    </nav>
+    <p class="footer__legal">&copy; <span id="year"></span> Hunter Cahill. All rights reserved.</p>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
+```
+
+- [ ] **Step 2: Verify the page renders correctly**
+
+With the server still running at port 8081, open `http://localhost:8081/music/when-i-fell-asleep/` and confirm:
+- Page title is "When I Fell Asleep · Hunter Cahill"
+- Audio player loads `/assets/audio/when-i-fell-asleep.mp3`
+- Lyrics include "If god is love / Why am I afraid?"
+- Contact form present
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add music/when-i-fell-asleep/index.html
+git commit -m "feat: add EPK page for When I Fell Asleep"
+```
+
+---
+
+### Task 4: Final verification and cleanup
+
+- [ ] **Step 1: Confirm all three pages load without console errors**
+
+With server running at port 8081, use browser dev tools (F12 → Console) on each page:
+- `http://localhost:8081/music/getting-by/` — 0 errors
+- `http://localhost:8081/music/dont-take-your-light/` — 0 errors
+- `http://localhost:8081/music/when-i-fell-asleep/` — 0 errors
+
+Audio errors for missing files are expected if the MP3s are gitignored — confirm by checking `assets/audio/` directory.
+
+- [ ] **Step 2: Confirm noindex is present on all three pages**
+
+```bash
+grep -r "noindex" music/
+```
+
+Expected output:
+```
+music/getting-by/index.html:  <meta name="robots" content="noindex, nofollow" />
+music/dont-take-your-light/index.html:  <meta name="robots" content="noindex, nofollow" />
+music/when-i-fell-asleep/index.html:  <meta name="robots" content="noindex, nofollow" />
+```
+
+- [ ] **Step 3: Confirm correct audio sources**
+
+```bash
+grep -r "assets/audio" music/
+```
+
+Expected output:
+```
+music/getting-by/index.html:      <audio controls preload="auto" src="/assets/audio/getting-by.mp3"></audio>
+music/dont-take-your-light/index.html:      <audio controls preload="auto" src="/assets/audio/dont-take-your-light.mp3"></audio>
+music/when-i-fell-asleep/index.html:      <audio controls preload="auto" src="/assets/audio/when-i-fell-asleep.mp3"></audio>
+```
+
+- [ ] **Step 4: Stop the local server**
+
+```bash
+# Press Ctrl+C in the terminal running python3 -m http.server 8081
+```
+
+- [ ] **Step 5: Commit the plan document**
+
+```bash
+git add docs/superpowers/plans/2026-06-07-epk-song-pages.md
+git commit -m "docs: add EPK song pages implementation plan"
+```
+
+---
+
+## Post-Release Checklist (manual, per song)
+
+When each song releases, remove `noindex` from its page:
+
+**Getting By — July 3, 2026:**
+Remove this line from `music/getting-by/index.html`:
+```html
+  <meta name="robots" content="noindex, nofollow" />
+```
+
+**Don't Take Your Light — August 8, 2026:**
+Remove this line from `music/dont-take-your-light/index.html`:
+```html
+  <meta name="robots" content="noindex, nofollow" />
+```
+
+**When I Fell Asleep — September 5, 2026:**
+Remove this line from `music/when-i-fell-asleep/index.html`:
+```html
+  <meta name="robots" content="noindex, nofollow" />
+```
+
+Also, when June 9 photos are ready: replace each `.epk__photo` div with:
+```html
+<img class="epk__photo-img" src="/assets/img/hunter-cahill-estuary.jpg" alt="Hunter Cahill" style="width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center top;border-radius:2px;margin-bottom:1.5rem;filter:sepia(0.18) contrast(1.06);" />
+```
