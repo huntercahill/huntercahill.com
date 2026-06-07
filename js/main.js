@@ -31,10 +31,63 @@
     });
   }
 
+  // Tracklist — click to play via SoundCloud Widget API
+  var scIframe = document.getElementById("sc-player");
+  if (scIframe && window.SC) {
+    var widget = SC.Widget(scIframe);
+    var trackItems = Array.prototype.slice.call(document.querySelectorAll(".tracklist li"));
+    widget.bind(SC.Widget.Events.READY, function () {
+      trackItems.forEach(function (li, index) {
+        li.addEventListener("click", function () {
+          trackItems.forEach(function (el) { el.classList.remove("is-playing"); });
+          li.classList.add("is-playing");
+          widget.skip(index);
+          widget.play();
+        });
+      });
+      widget.bind(SC.Widget.Events.PLAY, function (e) {
+        trackItems.forEach(function (el) { el.classList.remove("is-playing"); });
+        if (trackItems[e.soundId] === undefined) {
+          widget.getCurrentSoundIndex(function (i) {
+            if (trackItems[i]) trackItems[i].classList.add("is-playing");
+          });
+        }
+      });
+    });
+  }
+
+  // Contact form — AJAX submit, show success in place
+  var form = document.querySelector(".contact__form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = form.querySelector("button[type=submit]");
+      btn.textContent = "Sending…";
+      btn.disabled = true;
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      }).then(function (res) {
+        if (res.ok) {
+          form.innerHTML = "<p class=\"contact__thanks\">Thanks — I’ll be in touch.</p>";
+        } else {
+          btn.textContent = "Send";
+          btn.disabled = false;
+          alert("Something went wrong. Please try again.");
+        }
+      }).catch(function () {
+        btn.textContent = "Send";
+        btn.disabled = false;
+        alert("Something went wrong. Please try again.");
+      });
+    });
+  }
+
   // Scroll-triggered reveals — fail-safe.
   var targets = Array.prototype.slice.call(
     document.querySelectorAll(
-      ".section__label, .lede, .about__body, .music__head, .music__grid, .streaming, .press__item, .contact__line, .contact .btn"
+      ".section__label, .lede, .about__body, .music__head, .music__grid, .streaming, .press__item, .contact__line, .contact__form"
     )
   );
   targets.forEach(function (el) { el.classList.add("reveal-up"); });
