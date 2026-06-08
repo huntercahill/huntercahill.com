@@ -6,3 +6,6 @@ assets/audio/
 
 # Superpowers brainstorm sessions
 .superpowers/
+
+# Playwright MCP local artifacts
+.playwright-mcp/
