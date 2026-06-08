@@ -413,6 +413,78 @@ img, iframe { display: block; max-width: 100%; }
   .shows__item { grid-template-columns: 1fr; gap: 0.25rem; }
   .shows__date { order: -1; }
 }
+.shows__past-btn {
+  margin-top: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--bone-faint);
+  letter-spacing: 0.06em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s var(--ease);
+  padding: 0;
+}
+.shows__past-btn:hover { color: var(--bone-dim); }
+
+/* ---- Shows modal ------------------------------------------- */
+.shows-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pad);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+}
+.shows-modal.is-open { visibility: visible; opacity: 1; }
+.shows-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(21,17,14,0.86);
+  backdrop-filter: blur(8px);
+}
+.shows-modal__panel {
+  position: relative;
+  z-index: 1;
+  background: var(--ink-2);
+  border: 1px solid rgba(111,100,87,0.35);
+  border-radius: 2px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 2.8rem 3rem 3.2rem;
+  transform: translateY(14px);
+  transition: transform 0.38s var(--ease);
+}
+.shows-modal.is-open .shows-modal__panel { transform: translateY(0); }
+.shows-modal__close {
+  position: absolute;
+  top: 1.1rem; right: 1.3rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--bone-dim);
+  transition: color 0.25s var(--ease);
+}
+.shows-modal__close:hover { color: var(--bone); }
+.shows-modal__title {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--ember-soft);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(111,100,87,0.22);
+}
 
 /* ---- Contact ----------------------------------------------- */
 .contact { text-align: center; }
@@ -680,6 +752,110 @@ img, iframe { display: block; max-width: 100%; }
 }
 .lyrics-modal__body p { margin-bottom: 1.4rem; }
 .lyrics-modal__body p:last-child { margin-bottom: 0; }
+
+/* ---- Kit newsletter form ----------------------------------- */
+[data-uid="db695a7a7a"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: 560px !important;
+  font-family: var(--font-body) !important;
+}
+[data-uid="db695a7a7a"] [data-element="header"] { margin-bottom: 1.2rem !important; }
+[data-uid="db695a7a7a"] [data-element="header"] * {
+  font-family: var(--font-display) !important;
+  font-weight: 300 !important;
+  font-size: clamp(1.6rem, 3vw, 2.2rem) !important;
+  color: var(--bone) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.15 !important;
+  text-align: left !important;
+  background: transparent !important;
+}
+[data-uid="db695a7a7a"] [data-element="subheader"],
+[data-uid="db695a7a7a"] [data-element="subheader"] * {
+  color: var(--bone) !important;
+  font-family: var(--font-body) !important;
+  font-size: 1rem !important;
+  font-weight: 300 !important;
+  text-align: left !important;
+  background: transparent !important;
+}
+[data-uid="db695a7a7a"] [data-element="subheader"] { margin-bottom: 1.6rem !important; }
+[data-uid="db695a7a7a"] [data-style="clean"] {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 0.6rem !important;
+  align-items: stretch !important;
+}
+[data-uid="db695a7a7a"] ul.formkit-fields,
+[data-uid="db695a7a7a"] ul.seva-fields {
+  display: contents !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+[data-uid="db695a7a7a"] .formkit-field {
+  flex: 1 1 220px !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+[data-uid="db695a7a7a"] .formkit-input {
+  background: var(--ink-2) !important;
+  border: 1px solid var(--bone-faint) !important;
+  border-radius: 1px !important;
+  color: var(--bone) !important;
+  font-family: var(--font-body) !important;
+  font-size: 1rem !important;
+  font-weight: 300 !important;
+  padding: 0.7rem 1rem !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+[data-uid="db695a7a7a"] .formkit-input::placeholder { color: var(--bone-faint) !important; }
+[data-uid="db695a7a7a"] .formkit-input:focus {
+  outline: none !important;
+  border-color: var(--bone-dim) !important;
+}
+[data-uid="db695a7a7a"] [data-element="submit"],
+[data-uid="db695a7a7a"] button[data-element="submit"] {
+  width: auto !important;
+  flex-shrink: 0 !important;
+  align-self: stretch !important;
+}
+[data-uid="db695a7a7a"] .formkit-submit {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1px solid var(--ember) !important;
+  border-radius: 1px !important;
+  color: var(--bone) !important;
+  font-family: var(--font-display) !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  padding: 0.7rem 1.8rem !important;
+  width: auto !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: border-color 0.3s, color 0.3s !important;
+}
+[data-uid="db695a7a7a"] .formkit-submit:hover {
+  border-color: var(--ember-soft) !important;
+  color: var(--bone-dim) !important;
+}
+[data-uid="db695a7a7a"] .formkit-submit > span { color: inherit !important; }
+[data-uid="db695a7a7a"] [data-element="guarantee"],
+[data-uid="db695a7a7a"] [data-element="guarantee"] * {
+  color: var(--bone-dim) !important;
+  font-size: 0.78rem !important;
+  text-align: left !important;
+  background: transparent !important;
+}
+[data-uid="db695a7a7a"] [data-element="guarantee"] { margin-top: 0.8rem !important; }
+[data-uid="db695a7a7a"] .formkit-powered-by-convertkit-container { display: none !important; }
 
 /* ---- Reduced motion ---------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

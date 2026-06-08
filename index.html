@@ -160,6 +160,7 @@
           <span class="shows__location">Austin, TX</span>
         </li>
       </ul>
+      <button class="shows__past-btn" id="shows-past-btn" hidden>Appeared at</button>
     </section>
 
     <!-- Press -->
@@ -211,6 +212,12 @@
       </ul>
     </section>
 
+    <!-- Newsletter -->
+    <section class="section newsletter" id="newsletter">
+      <p class="section__label">Stay in the loop</p>
+      <script async data-uid="db695a7a7a" src="https://hunter-cahill.kit.com/db695a7a7a/index.js"></script>
+    </section>
+
     <!-- Contact -->
     <section class="section contact" id="contact">
       <p class="section__label">Contact</p>
@@ -244,6 +251,16 @@
     </nav>
     <p class="footer__legal">&copy; <span id="year"></span> Hunter Cahill. All rights reserved.</p>
   </footer>
+
+  <!-- Appeared at modal -->
+  <div class="shows-modal" id="shows-modal" role="dialog" aria-modal="true" aria-labelledby="shows-modal-title">
+    <div class="shows-modal__backdrop"></div>
+    <div class="shows-modal__panel">
+      <button class="shows-modal__close" aria-label="Close appeared at">&times;</button>
+      <h2 class="shows-modal__title" id="shows-modal-title">Appeared at</h2>
+      <ul class="shows__list" id="shows-past-list"></ul>
+    </div>
+  </div>
 
   <!-- Lyrics modal -->
   <div class="lyrics-modal" id="lyrics-modal" role="dialog" aria-modal="true" aria-labelledby="lyrics-modal-title">
