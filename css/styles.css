@@ -878,6 +878,30 @@ img, iframe { display: block; max-width: 100%; }
 }
 [data-uid="db695a7a7a"] [data-element="guarantee"] { margin-top: 0.8rem !important; }
 [data-uid="db695a7a7a"] .formkit-powered-by-convertkit-container { display: none !important; }
+[data-uid="db695a7a7a"] [data-element="success"],
+[data-uid="db695a7a7a"] [data-element="success"] * {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--bone) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 300 !important;
+  text-align: left !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+[data-uid="db695a7a7a"] .formkit-alert,
+[data-uid="db695a7a7a"] .formkit-alert-success {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1px solid var(--ember) !important;
+  border-radius: 1px !important;
+  color: var(--bone) !important;
+  padding: 0.9rem 1.2rem !important;
+  font-family: var(--font-body) !important;
+  font-size: 1rem !important;
+  font-weight: 300 !important;
+}
 
 /* ---- Reduced motion ---------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
