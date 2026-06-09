@@ -147,7 +147,20 @@
     </ol>
 
     <p class="listen__note">These are rough mixes. Please don&rsquo;t share.</p>
-    <script async data-uid="db695a7a7a" src="https://hunter-cahill.kit.com/db695a7a7a/index.js"></script>
+
+    <section class="newsletter">
+      <div class="newsletter__wrap">
+        <h2 class="newsletter__heading">Email list</h2>
+        <p class="newsletter__sub">New music, shows, and updates &mdash; straight to your inbox.</p>
+        <form class="newsletter__form" id="newsletter-form" novalidate>
+          <div class="newsletter__row">
+            <input class="newsletter__input" type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+            <button class="newsletter__btn btn btn--ghost" type="submit">Subscribe</button>
+          </div>
+          <p class="newsletter__msg" id="newsletter-msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
   <!-- Lyrics modal -->
@@ -220,6 +233,31 @@
       lyricsBackdrop.addEventListener("click", closeLyrics);
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && lyricsModal.classList.contains("is-open")) closeLyrics();
+      });
+    }());
+  </script>
+  <script>
+    (function () {
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRGI6m2NEzIvwwI9YsKmlcKbLCpyrGjQQumZRkx_yQl4EyxymBjJD5WbU8S3xqtOjTYA/exec';
+      var form = document.getElementById('newsletter-form');
+      var msg  = document.getElementById('newsletter-msg');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = form.email.value.trim();
+        if (!email) return;
+        msg.textContent = 'Submitting…';
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        }).then(function () {
+          form.reset();
+          msg.textContent = 'You’re on the list.';
+        }).catch(function () {
+          msg.textContent = 'Something went wrong. Try again or email huntercahill@gmail.com.';
+        });
       });
     }());
   </script>
