@@ -768,9 +768,9 @@ img, iframe { display: block; max-width: 100%; }
   font-family: var(--font-body);
   font-style: italic;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 1.3rem;
   line-height: 1.9;
-  color: var(--bone-dim);
+  color: var(--bone);
 }
 .lyrics-modal__body p { margin-bottom: 1.4rem; }
 .lyrics-modal__body p:last-child { margin-bottom: 0; }
