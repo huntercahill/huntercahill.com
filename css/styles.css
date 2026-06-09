@@ -218,20 +218,34 @@ img, iframe { display: block; max-width: 100%; }
 }
 
 /* ---- About ------------------------------------------------- */
-.about__photo {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: center top;
-  margin-bottom: 2rem;
-  filter: sepia(0.18) contrast(1.06);
+.about {
+  max-width: 1440px;
+  overflow: hidden;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: min(60%, 700px) 1fr;
+  align-items: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.about__grid {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: clamp(2rem, 6vw, 6rem);
-  align-items: start;
+.about__photo-link {
+  align-self: stretch;
+  display: block;
+  cursor: zoom-in;
+}
+
+.about__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 25% center;
+  filter: sepia(0.18) contrast(1.06);
+  display: block;
+}
+
+.about__content {
+  padding: clamp(5rem, 12vh, 9rem) var(--pad) clamp(5rem, 12vh, 9rem) clamp(2rem, 4vw, 3rem);
 }
 .lede {
   font-family: var(--font-display);
@@ -614,13 +628,21 @@ img, iframe { display: block; max-width: 100%; }
   .nav__links.is-open { transform: translateX(0); }
   .nav__links a { font-size: 1rem; }
 
-  .about__grid { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 1fr; min-height: auto; padding-left: 0; padding-right: 0; }
+  .about__photo { height: auto; aspect-ratio: 3 / 2; }
+  .about__content { padding: clamp(3rem, 8vh, 5rem) var(--pad); }
   .music__grid { grid-template-columns: 1fr; }
   .press__item a {
     grid-template-columns: 1fr;
     gap: 0.3rem;
   }
   .press__date { order: -1; }
+}
+
+@media (min-width: 821px) and (max-width: 1280px) {
+  .about { overflow: visible; grid-template-columns: 1fr minmax(460px, 1fr); }
+  .about__photo-link { height: 680px; align-self: start; overflow: hidden; }
+  .about__photo { object-position: center center; }
 }
 
 /* ---- Tracklist lyrics button -------------------------------- */
