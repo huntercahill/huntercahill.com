@@ -73,6 +73,22 @@
       border: none;
       border-radius: 2px;
     }
+    .epk__video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--ink-2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .epk__video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
     .epk-section-label {
       font-size: 0.72rem;
       text-transform: uppercase;
@@ -161,6 +177,16 @@
         title="Goddamn by Hunter Cahill on Spotify"
         loading="lazy"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+
+    <p class="epk__player-label">Watch</p>
+    <div class="epk__video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/rpMIdg_jDxA"
+        title="Hunter Cahill - Goddamn (Official Music Video)"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
     </div>
 
     <div class="epk__press">
